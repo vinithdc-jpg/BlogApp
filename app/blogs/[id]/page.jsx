@@ -7,21 +7,23 @@ import Link from 'next/link';
 import axios from 'axios';
 
 const page = ({ params }) => {
-
+    const resolvedParams = React.use(params);
     const [data, setData] = useState(null);
 
     const fetchBlogData = async () => {
-        const response = await axios.get('/api/blog',{
-            params:{
-                id:params.id
+        try {
+            const response = await axios.get(`/api/blog?id=${resolvedParams.id}`);
+            if (response.data) {
+                setData(response.data);
             }
-        })
-        setData(response.data);
+        } catch (error) {
+            console.error("Error fetching blog:", error);
+        }
     }
 
     useEffect(() => {
         fetchBlogData();
-    }, [])
+    }, [resolvedParams.id])
 
     return (data ? <>
         <div className="bg-black text-white min-h-screen py-10 px-6 md:px-12 lg:px-32">
@@ -74,7 +76,7 @@ const page = ({ params }) => {
             <div className="max-w-4xl mx-auto space-y-8 text-gray-300 leading-relaxed">
                 <div>
                     <h2 className="text-2xl font-semibold text-white mb-3">Introduction:</h2>
-                    <p>{data.desciption}</p>
+                    <p>{data.description}</p>
                 </div>
 
             </div>

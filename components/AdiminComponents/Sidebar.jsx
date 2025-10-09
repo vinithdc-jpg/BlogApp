@@ -9,7 +9,9 @@ const Sidebar = () => {
       {/* --------- Logo Section --------- */}
       <div>
         <div className="flex items-center justify-center mb-10">
+          <Link href='/'>
           <Image src={assets.logo} width={120} alt="Logo" className="invert" />
+          </Link>
         </div>
 
         {/* --------- Navigation Links --------- */}
